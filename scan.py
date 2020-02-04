@@ -53,7 +53,7 @@ class Scan(APIEndpoint):
             "credentials":
             [{
                 "id": credentialsid,
-                "name":"TI Security SSH",
+                "name":"Name of Creds",
                 "description":"Updated 4\\11\\2019",
                 "type":"ssh"
             }],
@@ -106,7 +106,7 @@ class Scan(APIEndpoint):
       
 
     def email(self):
-        email_dict = {"email": "victor.m.odongo@census.gov"}
+        email_dict = {"email": "email"}
         self.connect('POST', 'scanResult/{}/email'.format(self.scanResultId),email_dict)
         print("Email results sent")
 

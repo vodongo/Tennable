@@ -1,11 +1,5 @@
 from tennableApi import APIEndpoint
-import time
-from zipfile import ZipFile
-from io import BytesIO
 from urllib.request import urlopen
-import logging
-import base64
-import alm
 
 
 '''
@@ -53,7 +47,7 @@ class Scan(APIEndpoint):
             "credentials":
             [{
                 "id": credentialsid,
-                "name":"Name of Creds",
+                "name":"TI Security SSH",
                 "description":"Updated 4\\11\\2019",
                 "type":"ssh"
             }],
@@ -106,22 +100,30 @@ class Scan(APIEndpoint):
       
 
     def email(self):
-        email_dict = {"email": "email"}
+        email_dict = {"email": "victor.m.odongo@census.gov"}
         self.connect('POST', 'scanResult/{}/email'.format(self.scanResultId),email_dict)
         print("Email results sent")
 
     def download(self):
+
+        jobID = 83460
     
-        print(f'Downloading scan with ID: {self.scanResultId}')
+        print(f'Downloading scan with ID: {jobID}')
 
         payload = {       
             'downloadType': 'v2',
            }
 
-        self.connect('POST','scanResult/{}/download'.format(self.scanResultId), data=payload,stream=True)
-
-        converter = xml2csv("84218.nessus", "output.csv", encoding="utf-8")
-        converter.convert(tag="item")
-
+        self.connect('POST','scanResult/{}/download'.format(jobID), data=payload,stream=True)
+        
+   
 
 
+if __name__ == '__main__':
+    tennableInstance = Scan(server='')  
+    tennableInstance.login(username="",password="")
+    tennableInstance.create_scan(name ='',repoid='',zoneid='',policyid='',credentialsid='',IPlist='')
+    tennableInstance.launch()
+    tennableInstance.status()
+    tennableInstance.download()
+    tennableInstance.logout()
